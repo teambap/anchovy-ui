@@ -2,7 +2,7 @@
 <html class="no-js">
   <head>
     <meta charset="utf-8">
-    <title>위시리스트 Alpha</title>
+    <title>위시리스트 &alpha;</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -25,10 +25,6 @@
     <!-- Add your site or application content here -->
     <div class="container">
       <div class="header" ng-controller="HeaderCtrl">
-        <ul class="nav nav-pills pull-right">
-          <li ng-class="{ active: isActive('/')}"><a ng-href="#/">Home</a></li>
-          <li ng-class="{ active: isActive('/login')}"><a ng-href="#/login">Login</a></li>
-        </ul>
         <h3 class="text-muted">위시리스트</h3>
       </div>
 
@@ -78,7 +74,7 @@
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/controllers/about.js"></script>
+        <script src="scripts/controllers/login.js"></script>
         <!-- endbuild -->
 </body>
 </html>

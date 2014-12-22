@@ -8,10 +8,13 @@
  * Controller of the anchovyApp
  */
 angular.module('anchovyApp')
-  .controller('LoginCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+    .controller('LoginCtrl', function ($scope, $location, Authentication) {
+        if (Authentication.isAuthenticated()) {
+            var auth = Authentication.getAuthenticatedAccount();
+            $location.url('/u/' + auth.user);
+        }
+
+        $scope.testlogin = function () {
+            Authentication.testlogin();
+        }
+    });
