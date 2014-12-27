@@ -22,8 +22,13 @@ angular.module('anchovyApp')
       }, true);
 
       $scope.addWish = function () {
-          $scope.wishlist.push($scope.wishitem);
-          $scope.wishitem = '';
+          var wishitem = {
+              name: $scope.wishitemname,
+              url: $scope.wishitemurl
+          };
+
+          $scope.wishlist.push(wishitem);
+          $scope.wishitemname = $scope.wishitemurl = '';
       };
 
       $scope.removeWish = function (index) {

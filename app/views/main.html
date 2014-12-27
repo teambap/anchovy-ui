@@ -1,23 +1,23 @@
 <div class="container">
     <form role="form" ng-submit="addWish()">
-        <div class="row">
-            <div class="col-sm-2"></div>
-            <div class="col-sm-8 input-group">
-                <input type="text" ng-model="wishitem" placeholder="가지고 싶은 물건을 입력하세요" class="form-control">
-                <span class="input-group-btn">
-                    <input type="submit" class="btn btn-primary" value="입력">
-                </span>
+        <div class="row jumbotron">
+            <div class="col-sm-5">
+                <input type="text" ng-model="wishitemname" placeholder="What do you want?" class="form-control input-lg">
             </div>
-            <div class="col-sm-2"></div>
-        </div>
-
-        <div ui-sortable ng-model="wishlist">
-            <p class="input-group" ng-repeat="wishitem in wishlist" style="padding:5px 10px; cursor: move;">
-                <input type="text" ng-model="wishitem" class="form-control" readonly>
-                <span class="input-group-btn">
-                    <button class="btn btn-danger" ng-click="removeWish($index)" aria-label="Remove">X</button>
-                </span>
-            </p>
+            <div class="col-sm-5">
+                <input type="text" ng-model="wishitemurl" placeholder="URL (Option)" class="form-control input-lg">
+            </div>
+            <div class="col-sm-2">
+                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-heart"></span></button>
+            </div>
         </div>
     </form>
+
+    <div ui-sortable ng-model="wishlist">
+        <p class="bg-info" ng-repeat="wishitem in wishlist" style="padding:5px 10px; cursor: move;">
+            <span class="btn disabled glyphicon glyphicon-ok"></span> <span>{{wishitem.name}}</span>
+            <a ng-if="wishitem.url" href="{{wishitem.url}}" class="btn btn-link"> <span class="glyphicon glyphicon-link"></span></a>
+            <button class="btn btn-danger pull-right" ng-click="removeWish($index)" aria-label="Remove">X</button>
+        </p>
+    </div>
 </div>
