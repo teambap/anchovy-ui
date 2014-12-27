@@ -47,7 +47,8 @@ angular
           getAuthenticatedAccount: getAuthenticatedAccount,
           isAuthenticated: isAuthenticated,
           setAuthenticatedAccount: setAuthenticatedAccount,
-          unauthenticated: unauthenticated
+          unauthenticated: unauthenticated,
+          testlogin: testlogin,
       };
 
       return Authentication;
