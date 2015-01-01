@@ -9,7 +9,7 @@
  */
 angular.module('anchovyApp')
   .controller('MainCtrl', function ($scope, $location, $routeParams, $http) {
-      $http.get('/wish/list.json').success(listSuccessFn).error(listErrorFn);
+      $http.get('/item/list.json').success(listSuccessFn).error(listErrorFn);
 
       function listSuccessFn(data) {
           if (data.code && data.code === '200') {
@@ -24,7 +24,7 @@ angular.module('anchovyApp')
                   link: $scope.wishitemurl
               };
 
-              $http.post('/wish/add.json', wishitem).success(function (data) {
+              $http.post('/item/add.json', wishitem).success(function (data) {
                   if (data.code && data.code === '200') {
                       $scope.wishlist.push(wishitem);
                       $scope.wishitemname = $scope.wishitemurl = '';
@@ -33,7 +33,7 @@ angular.module('anchovyApp')
           };
 
           $scope.removeWish = function (index) {
-              $http.get('/wish/' + $scope.wishlist[index].id + 'delete.json').success(function (data) {
+              $http.get('/item/' + $scope.wishlist[index].id + 'delete.json').success(function (data) {
                   if (data.code && data.code === '200') {
                       $scope.wishlist.splice(index, 1);
                   }
@@ -42,6 +42,6 @@ angular.module('anchovyApp')
       }
 
       function listErrorFn() {
-          $location.url('/');
+          $location.url('/unknown-error');
       }
   });

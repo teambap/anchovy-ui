@@ -32,9 +32,7 @@ angular
           templateUrl: 'views/main.html',
           controller: 'MainCtrl'
       })
-      .otherwise({
-        redirectTo: '/'
-      });
+      .otherwise({templateUrl:'/404.html'});
   })
   .controller('HeaderCtrl', function ($scope, $cookies, $http, $location) {
       $scope.isActive = function (viewLocation) {
