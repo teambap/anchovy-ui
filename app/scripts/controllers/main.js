@@ -33,14 +33,14 @@ angular.module('anchovyApp')
                   }
               }).success(function (data) {
                   if (data.code && data.code === '200') {
-                      $scope.wishlist.push(wishitem);
+                      $scope.wishlist.unshift(wishitem);
                       $scope.wishitemname = $scope.wishitemurl = '';
                   }
               });
           };
 
           $scope.removeWish = function (index) {
-              $http.get('/item/' + $scope.wishlist[index].id + 'delete.json').success(function (data) {
+              $http.get('/item/' + $scope.wishlist[index].id + '/delete.json').success(function (data) {
                   if (data.code && data.code === '200') {
                       $scope.wishlist.splice(index, 1);
                   }
