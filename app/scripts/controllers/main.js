@@ -24,7 +24,14 @@ angular.module('anchovyApp')
                   link: $scope.wishitemurl
               };
 
-              $http.post('/item/add.json', wishitem).success(function (data) {
+              $http({
+                  url: '/item/add.json',
+                  method: 'POST',
+                  data: $.param(wishitem),
+                  headers: {
+                      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                  }
+              }).success(function (data) {
                   if (data.code && data.code === '200') {
                       $scope.wishlist.push(wishitem);
                       $scope.wishitemname = $scope.wishitemurl = '';
