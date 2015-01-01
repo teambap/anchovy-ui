@@ -28,7 +28,7 @@ angular
           templateUrl: 'views/login.html',
           controller: 'LoginCtrl'
       })
-      .when('/u/:username', {
+      .when('/list', {
           templateUrl: 'views/main.html',
           controller: 'MainCtrl'
       })
@@ -36,64 +36,17 @@ angular
         redirectTo: '/'
       });
   })
-  .controller('HeaderCtrl', function ($scope, $location) {
+  .controller('HeaderCtrl', function ($scope, $cookies, $http, $location) {
       $scope.isActive = function (viewLocation) {
           return viewLocation === $location.path();
       };
-  })
-  .factory('Authentication', function ($cookies, $http, $location) {
-      var Authentication = {
-          login: login,
-          getAuthenticatedAccount: getAuthenticatedAccount,
-          isAuthenticated: isAuthenticated,
-          setAuthenticatedAccount: setAuthenticatedAccount,
-          unauthenticated: unauthenticated,
-          testlogin: testlogin,
+
+      $scope.logout = function () {
+          $http.get('/user/logout.json').success(function (data) {
+              if (data.code && data.code === '200') {
+                  $cookies.profile = '';
+                  $location.url('/');
+              }
+          });
       };
-
-      return Authentication;
-
-      function testlogin() {
-          Authentication.setAuthenticatedAccount({user:'test'});
-
-          $location.url('/u/test');
-      }
-
-      function login (email, password) {
-          return $http.post('/api/v1/auth/login/', {
-              email: email, password: password
-          }).then(loginSuccesFn, loginErrorFn);
-
-          function loginSuccess (data, status, headers, config) {
-              Authentication.setAuthenticatedAccount(data.data);
-
-              var auth = Authentication.getAuthenticatedAccount()
-
-              $location.url('/u/' + auth.user);
-          }
-
-          function loginErrorFn (data, status, headers, config) {
-              return;
-          }
-      }
-
-      function getAuthenticatedAccount () {
-          if (!$cookies.authenticatedAccount) {
-              return;
-          }
-
-          return JSON.parse($cookies.authenticatedAccount);
-      }
-
-      function isAuthenticated () {
-          return !!$cookies.authenticatedAccount;
-      }
-
-      function setAuthenticatedAccount (account) {
-          $cookies.authenticatedAccount = JSON.stringify(account);
-      }
-
-      function unauthenticated () {
-          delete $cookies.authenticatedAccount;
-      }
   });

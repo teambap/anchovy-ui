@@ -48,6 +48,10 @@ module.exports = function (grunt) {
         files: ['<%= yeoman.app %>/styles/{,*/}*.css'],
         tasks: ['newer:copy:styles', 'autoprefixer']
       },
+      apimock: {
+          files: ['<%= yeoman.app %>/apimock/{,*/}*.json'],
+          tasks: ['newer:copy:apimock']
+      },
       gruntfile: {
         files: ['Gruntfile.js']
       },
@@ -327,16 +331,24 @@ module.exports = function (grunt) {
         cwd: '<%= yeoman.app %>/styles',
         dest: '.tmp/styles/',
         src: '{,*/}*.css'
+      },
+      apimock: {
+        expand: true,
+        cwd: '<%= yeoman.app %>/apimock',
+        dest: '.tmp/',
+        src: '{,*/}*.json'
       }
     },
 
     // Run some tasks in parallel to speed up the build process
     concurrent: {
       server: [
-        'copy:styles'
+        'copy:styles',
+        'copy:apimock'
       ],
       test: [
-        'copy:styles'
+        'copy:styles',
+        'copy:apimock'
       ],
       dist: [
         'copy:styles',

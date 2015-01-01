@@ -8,30 +8,40 @@
  * Controller of the anchovyApp
  */
 angular.module('anchovyApp')
-  .controller('MainCtrl', function ($scope, $location, $routeParams, localStorageService, Authentication) {
-      var username = $routeParams.username;
+  .controller('MainCtrl', function ($scope, $location, $routeParams, $http) {
+      $http.get('/wish/list.json').success(listSuccessFn).error(listErrorFn);
 
-      if (!Authentication.isAuthenticated()) {
-          $location.url('/');
-      }
+      function listSuccessFn(data) {
+          if (data.code && data.code === '200') {
+              $scope.wishlist = data.data.items;
+          } else {
+              listErrorFn();
+          }
 
-      $scope.wishlist = localStorageService.get('wishlist') || [];
+          $scope.addWish = function () {
+              var wishitem = {
+                  name: $scope.wishitemname,
+                  link: $scope.wishitemurl
+              };
 
-      $scope.$watch('wishlist', function () {
-          localStorageService.set('wishlist', $scope.wishlist);
-      }, true);
-
-      $scope.addWish = function () {
-          var wishitem = {
-              name: $scope.wishitemname,
-              url: $scope.wishitemurl
+              $http.post('/wish/add.json', wishitem).success(function (data) {
+                  if (data.code && data.code === '200') {
+                      $scope.wishlist.push(wishitem);
+                      $scope.wishitemname = $scope.wishitemurl = '';
+                  }
+              });
           };
 
-          $scope.wishlist.push(wishitem);
-          $scope.wishitemname = $scope.wishitemurl = '';
-      };
+          $scope.removeWish = function (index) {
+              $http.get('/wish/' + $scope.wishlist[index].id + 'delete.json').success(function (data) {
+                  if (data.code && data.code === '200') {
+                      $scope.wishlist.splice(index, 1);
+                  }
+              });
+          };
+      }
 
-      $scope.removeWish = function (index) {
-          $scope.wishlist.splice(index, 1);
-      };
+      function listErrorFn() {
+          $location.url('/');
+      }
   });
