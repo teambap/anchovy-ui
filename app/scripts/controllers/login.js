@@ -10,7 +10,7 @@
 angular.module('anchovyApp')
     .controller('LoginCtrl', function ($scope, $http, $location, $cookies) {
         $http.get('/user/info.json').success(function (data) {
-            if (data.code && data.code === 200) {
+            if (data.code && data.code === '200') {
                 $cookies.profile = data.profile.profile_image_url;
                 $location.url('/list');
             }
