@@ -16,7 +16,7 @@
     <div ng-model="wishlist">
         <p class="bg-info" ng-repeat="wishitem in wishlist" style="padding:5px 10px;">
             <span class="btn disabled glyphicon glyphicon-ok"></span> <span>{{wishitem.name}}</span>
-            <a ng-if="wishitem.link" href="{{wishitem.link}}" class="btn btn-link"> <span class="glyphicon glyphicon-link"></span></a>
+            <a ng-if="wishitem.link" href="{{wishitem.link}}" class="btn btn-link" target="_blank"> <span class="glyphicon glyphicon-link"></span></a>
             <button class="btn btn-danger pull-right" ng-click="removeWish($index)" aria-label="Remove">X</button>
         </p>
     </div>
