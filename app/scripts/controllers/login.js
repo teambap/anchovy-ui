@@ -15,9 +15,4 @@ angular.module('anchovyApp')
                 $location.url('/list');
             }
         });
-
-        $scope.testlogin = function () {
-            $cookies.profileimg = '';
-            $location.url('/list');
-        };
     });
